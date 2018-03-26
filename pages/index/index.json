@@ -1,0 +1,7 @@
+{
+  "backgroundTextStyle": "light",
+  "navigationBarBackgroundColor": "#6A5ACD",
+  "navigationBarTitleText": "很赞天气",
+  "navigationBarTextStyle": "white",
+  "enablePullDownRefresh": true
+}

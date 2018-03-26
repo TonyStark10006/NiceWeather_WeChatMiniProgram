@@ -1,0 +1,43 @@
+<!-- index.wxml  -->
+<view class='container'>
+<!-- <view>所在城市：{{ city }}</view> -->
+<view id='today'>
+  <view class="icon-box">
+      <icon type="success" size="50"></icon>
+      <view class="icon-box__ctn">
+          <view class="icon-box__title">{{ city }}</view>
+      </view>
+  </view>
+  <view class="icon-box">
+      <icon type="info" size="50"></icon>
+      <view class="icon-box__ctn">
+          <view class="icon-box__title">当前温度：{{ tem }}摄氏度</view>
+          <view class="icon-box__desc">{{ tips }}</view>
+      </view>
+  </view>
+  <!-- <view><icon type='info'></icon> 当前温度：{{ tem }}摄氏度</view>
+  <view><icon type='warn'></icon> tips：{{ tips }}</view> -->
+</view>
+<view>
+  <button class="weui-btn" type="primary">{{ t1 }}</button>
+  <button class="weui-btn" type="default">{{ t2 }}</button>
+  <button class="weui-btn" type="primary">{{ t3 }}</button>
+  <button class="weui-btn" type="default">{{ t4 }}</button>
+  <button class="weui-btn" type="primary">{{ t5 }}</button>
+  <button class="weui-btn" type="default">{{ t6 }}</button>
+  <button class="weui-btn" type="primary">{{ t7 }}</button>
+</view>
+<!-- <block>
+<view><icon type='success'></icon>厉害了, {{ name }}</view>
+</block>
+  <view bindtap='clickme'>点击我试下</view>
+  <view bindtap='resetCounter'>重置点击次数</view>
+  <view>你点击了 {{ num }}次</view>
+  <button bindtap='loading'>点击出现loading框</button>
+  <button bindtap='exitLoading'>点击关闭loading框</button>
+  <button class="weui-btn" type="primary">页面主操作 Normal</button>
+  <view>经度：{{ longitude }} - 纬度：{{ latitude }}</view> -->
+  <view class="weui-footer">
+      <view class="weui-footer__text">Copyright © 2018 Vofy</view>
+  </view>
+</view>
