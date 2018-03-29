@@ -1,6 +1,8 @@
 /* pages/index/test.wxss */
 icon{
-    margin-right: 13px;
+    margin-right: 21px;
+    margin-left: 8px;
+    /*icon默认margin-right: 13px  */
 }
 .page__bd {
     padding-left: 40px;
@@ -26,4 +28,17 @@ icon{
 .icon_sp_area {
     margin-top: 10px;
     text-align: left;
+}
+.image{
+    margin-right: 13px;
+}
+/*重写weui页脚  */
+.weui-footer {
+  color:#999;
+  font-size:14px;
+  text-align:center;
+  position:fixed;
+  bottom:.52em;
+  left:0;
+  right:0;
 }

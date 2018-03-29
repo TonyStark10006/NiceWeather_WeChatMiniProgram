@@ -58,6 +58,7 @@ Page({
                 this.data["city"] = city;
                 this.data["tem"] = res.data.results[0].now.temperature;
                 this.data["wea"] = res.data.results[0].now.text;
+                this.data["iconSrc"] = "../../resources/weatherIcon/" + res.data.results[0].now.code + ".png";
 
                 //心知天气接口-未来三天天气
                 wx.request({
@@ -76,7 +77,7 @@ Page({
                     for (var i = 0; i < forecast.length; i++) {
                     this.data["t" + (i + 1)] = //forecast[i].date + " " +
                       forecast[i].text_day + " "
-                      + forecast[i].low + "℃-"
+                      + forecast[i].low + "-"
                       + forecast[i].high + "℃ "
                       //+ forecast[i].wind_direction_degrdd + " "
                       + forecast[i].wind_direction

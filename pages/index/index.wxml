@@ -2,29 +2,31 @@
 <view class='container'>
 <view id='today'>
   <view class="icon-box">
-      <icon type="success" size="50"></icon>
+      <icon type="success" size="34"></icon>
       <view class="icon-box__ctn">
           <view class="icon-box__title">{{ city }}</view>
       </view>
   </view>
   <view class="icon-box">
-      <icon type="info" size="50"></icon>
+      <!-- <icon type="info" size="50"></icon> -->
+      <image style="width: 50px; height: 50px;" src="{{ iconSrc }}" mode="aspectFill" class='image'></image>
       <view class="icon-box__ctn">
-          <view class="icon-box__title">{{ wea }} - {{ tem }}℃</view>
+          <view class="icon-box__title">{{ wea }} · {{ tem }}℃</view>
           <view class="icon-box__desc">{{ tips }}</view>
       </view>
   </view>
 </view>
 <view>
-  <button class="weui-btn" type="primary">今天: {{ t1 }}</button>
-  <button class="weui-btn" type="default">明天: {{ t2 }}</button>
-  <button class="weui-btn" type="primary">后天: {{ t3 }}</button>
+  <button class="weui-btn" type="primary">今: {{ t1 }}</button>
+  <button class="weui-btn" type="default">明: {{ t2 }}</button>
+  <button class="weui-btn" type="primary">后: {{ t3 }}</button>
   <!-- <button class="weui-btn" type="default">{{ t4 }}</button>
   <button class="weui-btn" type="primary">{{ t5 }}</button>
   <button class="weui-btn" type="default">{{ t6 }}</button>
   <button class="weui-btn" type="primary">{{ t7 }}</button> -->
 </view>
-  <view class="weui-footer">
-      <view class="weui-footer__text">Copyright © 2018 Vofy</view>
+  <view class=".weui-footer">
+      <view class="weui-footer__text">感谢心知天气、百度地图提供数据</view>
+      <view class="weui-footer__text">Copyright © 2018 Vofy.</view>
   </view>
 </view>
