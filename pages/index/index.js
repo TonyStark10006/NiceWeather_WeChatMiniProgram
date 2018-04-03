@@ -2,6 +2,40 @@ const app = getApp();
 const thisPage = getCurrentPages;
 const apiData = require('../../resources/data.js')
 const config = require('../../config.js')
+// const city = Promise(function (resolve, reject) {
+//   wx.getLocation({
+//     type: 'wgs84',
+//     success: (res) => {
+//       wx.hideLoading()
+//       wx.showLoading({
+//         title: '查询中...',
+//       })
+//       var latitude = res.latitude
+//       var longitude = res.longitude
+//       var speed = res.speed
+//       var accuracy = res.accuracy
+//       //根据获取到的坐标查询城市代码
+//       wx.request({
+//         url: config.data.baiduUrl,
+//         data: {
+//           ak: config.data.baiduAK,
+//           location: latitude + "," + longitude,
+//           output: 'json',
+//           pois: 1
+//         },
+//         success: (res) => {
+//           var city = res.data.result.addressComponent.city
+//           //app.globalData.city = res.data.result.addressComponent.city
+//           if (city) {
+//             resolve(value)
+//           } else {
+//             reject(error)
+//           }
+//         }
+//       })
+//     }
+//   })
+// })
 
 // pages/index/index.js
 Page({
@@ -16,7 +50,84 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    //var that = this
+    this.getWeatherMsg()
+
+    // 个人接口
+    // 坐标转城市
+    //  this.getLocation().then((response) => {
+    //    var data = {}
+    //    data["city"] = response;
+    //    // 根据城市名查天气
+    //    this.getWeatherMsg1('http://localhost/getWeatherMsg?city=' + response).then((response) => {
+    //      // 填充视图
+    //      console.log(response)
+    //      for (var i = 0;i < response.data.length; i++) {
+    //       data["t" + (i + 1)] = "";
+    //       for (var j = 0; j < response.data[i].length; j++) {
+    //       data["t" + (i + 1)] += response.data[i][j]
+    //       //console.log(response.data[i][j])
+    //       }
+    //      }
+    //      console.log(data)
+    //      this.setData(data)
+    //      wx.hideLoading()
+    //    })
+    //  })
+
+  },
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+  
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide: function () {
+  
+  },
+
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload: function () {
+
+  },
+
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function () {
+    wx.showNavigationBarLoading()
+    this.getWeatherMsg();
+    wx.stopPullDownRefresh()
+  },
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+  
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+  
+  },
+  
+  getWeatherMsg: function() {
     var data = {}
     wx.showLoading({
       title: '定位中...',
@@ -32,7 +143,6 @@ Page({
         var longitude = res.longitude
         var speed = res.speed
         var accuracy = res.accuracy
-        //console.log('纬度：' + latitude + "  纬度：" + longitude)
         //根据获取到的坐标查询城市代码
         wx.request({
           url: config.data.baiduUrl,
@@ -75,12 +185,12 @@ Page({
                     //console.log(res.data.results[0].daily)
                     var forecast = res.data.results[0].daily
                     for (var i = 0; i < forecast.length; i++) {
-                    this.data["t" + (i + 1)] = //forecast[i].date + " " +
-                      forecast[i].text_day + " "
-                      + forecast[i].low + "-"
-                      + forecast[i].high + "℃ "
-                      //+ forecast[i].wind_direction_degrdd + " "
-                      + forecast[i].wind_direction
+                      this.data["t" + (i + 1)] = //forecast[i].date + " " +
+                        forecast[i].text_day + " "
+                        + forecast[i].low + "-"
+                        + forecast[i].high + "℃ "
+                        //+ forecast[i].wind_direction_degrdd + " "
+                        + forecast[i].wind_direction
                     }
 
                     //心知天气接口-生活提示
@@ -100,6 +210,8 @@ Page({
 
                         //更新视图
                         this.setData(this.data)
+                        wx.hideLoading();
+                        wx.hideNavigationBarLoading()
                       }
                     })
 
@@ -141,60 +253,68 @@ Page({
 
             //console.log(res.data.result)
             //console.log("心知key加密后结果" + config.data.xinzhiEncrypted)
-            wx.hideLoading()
+            //wx.hideLoading()
           }
         })
+      },
+      fail: () => {
+        wx.hideLoading();
+        wx.showModal({
+          content: '定位失败，请重新授权',
+          showCancel: false,
+          success: function (res) {
+            if (res.confirm) {
+              console.log('用户点击确定')
+            }
+          }
+        });
       }
     })
-            console.log(this.data)
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-  
+  getLocation: function() {
+    return new Promise(function(resolve, reject) {
+        wx.getLocation({
+        type: 'wgs84',
+        success: (res) => {
+          wx.hideLoading()
+          wx.showLoading({
+            title: '查询中...',
+          })
+          var latitude = res.latitude
+          var longitude = res.longitude
+          var speed = res.speed
+          var accuracy = res.accuracy
+          //根据获取到的坐标查询城市代码
+          wx.request({
+            url: config.data.baiduUrl,
+            data: {
+              ak: config.data.baiduAK,
+              location: latitude + "," + longitude,
+              output: 'json',
+              pois: 1
+            },
+            success: (res) => {
+              //this.city = res.data.result.addressComponent.
+              //app.globalData.city = res.data.result.addressComponent.city
+              //console.log(res.data.result.addressComponent.city)
+              resolve(res.data.result.addressComponent.city)
+            }
+          })
+        }
+      })
+    })
   },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-  
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-  
-  },
+  getWeatherMsg1: function(url) {
+    return new Promise(function(resolve, reject) {
+      wx.request({
+        url: url,
+        success: (res) => {
+          //console.log(res.data)
+          resolve(res.data)
+        }
+      })
+    })
+  }
 })
