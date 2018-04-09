@@ -260,11 +260,26 @@ Page({
       fail: () => {
         wx.hideLoading();
         wx.showModal({
-          content: '定位失败，请重新授权',
+          content: "定位失败，请重新授权",
           showCancel: false,
           success: function (res) {
+            // 用户点击确定
             if (res.confirm) {
-              console.log('用户点击确定')
+              //this.getWeatherMsg()
+              wx.openSetting({
+                success: (res) => {
+                  wx.showToast({
+                    title: '请下拉页面刷新',
+                    icon: "none"
+                  })
+                }
+              })
+              // 用户无操作
+            } else {
+              wx.showModal({
+                content: "定位失败，下拉本页面刷新或到设置页面授权位置权限",
+                showCancel: false
+              })
             }
           }
         });
