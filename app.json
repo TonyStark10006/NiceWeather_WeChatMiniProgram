@@ -1,13 +1,14 @@
 {
   "pages":[
     "pages/index/index",
+    "pages/regionsPicker/regionsPicker",
     "pages/logs/logs"
   ],
   "window":{
-    "backgroundTextStyle":"light",
-    "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "WeChat",
-    "navigationBarTextStyle":"black",
-    "enablePullDownRefresh": true
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#6A5ACD",
+    "navigationBarTitleText": "很赞天气",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#6A5ACD"
   }
 }

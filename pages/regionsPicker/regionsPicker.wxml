@@ -1,0 +1,10 @@
+<!--pages/regionsPicker/regionsPicker.wxml-->
+<view>
+  <view class="show">{{areaPicker.address}}</view>
+  <view class="show">
+      <button class="weui-btn mini-btn" type="primary" size="mini" bindtap='confirmRegions'>确定</button>
+      <button class="weui-btn mini-btn" type="default" size="mini" style='margin-left:20px;' bindtap='cancelSelected'>取消</button>
+  </view>
+  <import src="../../resources/template/regionsPicker/index.wxml"/>
+  <template is="areaPicker" data="{{...areaPicker}}"/>
+</view>
