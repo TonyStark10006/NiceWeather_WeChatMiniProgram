@@ -413,66 +413,73 @@ Page({
         sig: config.data.xinzhiEncrypted
       },
       success: (res) => {
-        //console.log(res.data.results[0].now);
-        this.data["city"] = city;
-        this.data["tem"] = res.data.results[0].now.temperature;
-        this.data["wea"] = res.data.results[0].now.text;
-        this.data["iconSrc"] = "../../resources/weatherIcon/" + res.data.results[0].now.code + ".png";
+        if (res.statusCode == 200) {
+          //console.log(res.data.results[0].now);
+          this.data["city"] = city;
+          this.data["tem"] = res.data.results[0].now.temperature;
+          this.data["wea"] = res.data.results[0].now.text;
+          this.data["iconSrc"] = "../../resources/weatherIcon/" + res.data.results[0].now.code + ".png";
 
-        //心知天气接口-未来三天天气
-        wx.request({
-          url: config.data.xinzhiDailyWthUrl,
-          data: {
-            location: city,
-            ts: config.data.xinzhiTS,
-            uid: config.data.xinzhiUID,
-            sig: config.data.xinzhiEncrypted,
-            start: 0,
-            days: 5
-          },
-          success: (res) => {
-            //console.log(res.data.results[0].daily)
-            var forecast = res.data.results[0].daily
-            for (var i = 0; i < forecast.length; i++) {
-              this.data["t" + (i + 1)] = //forecast[i].date + " " +
-                forecast[i].text_day + " "
-                + forecast[i].low + "-"
-                + forecast[i].high + "℃ "
-                //+ forecast[i].wind_direction_degrdd + " "
-                + forecast[i].wind_direction
-            }
-
-            //心知天气接口-生活提示
-            wx.request({
-              url: config.data.xinzhiSuggestionUrl,
-              data: {
-                location: city,
-                ts: config.data.xinzhiTS,
-                uid: config.data.xinzhiUID,
-                sig: config.data.xinzhiEncrypted
-              },
-              success: (res) => {
-                //console.log(res.data.results[0].suggestion)
-                var suggestion = res.data.results[0].suggestion;
-                this.data["tips"] = "可穿" + suggestion.dressing.brief + "衣服，感冒" +
-                  suggestion.flu.brief + "，紫外线" + suggestion.uv.brief;
-
-                //更新视图
-                this.setData(this.data)
-                wx.hideLoading();
-                wx.hideNavigationBarLoading()
+          //心知天气接口-未来三天天气
+          wx.request({
+            url: config.data.xinzhiDailyWthUrl,
+            data: {
+              location: city,
+              ts: config.data.xinzhiTS,
+              uid: config.data.xinzhiUID,
+              sig: config.data.xinzhiEncrypted,
+              start: 0,
+              days: 5
+            },
+            success: (res) => {
+              //console.log(res.data.results[0].daily)
+              var forecast = res.data.results[0].daily
+              for (var i = 0; i < forecast.length; i++) {
+                this.data["t" + (i + 1)] = //forecast[i].date + " " +
+                  forecast[i].text_day + " "
+                  + forecast[i].low + "-"
+                  + forecast[i].high + "℃ "
+                  //+ forecast[i].wind_direction_degrdd + " "
+                  + forecast[i].wind_direction
               }
-            })
 
-          }
-        })
-      }
-    })
+              //心知天气接口-生活提示
+              wx.request({
+                url: config.data.xinzhiSuggestionUrl,
+                data: {
+                  location: city,
+                  ts: config.data.xinzhiTS,
+                  uid: config.data.xinzhiUID,
+                  sig: config.data.xinzhiEncrypted
+                },
+                success: (res) => {
+                  //console.log(res.data.results[0].suggestion)
+                  var suggestion = res.data.results[0].suggestion;
+                  this.data["tips"] = "可穿" + suggestion.dressing.brief + "衣服，感冒" +
+                    suggestion.flu.brief + "，紫外线" + suggestion.uv.brief;
+
+                  //更新视图
+                  this.setData(this.data)
+                  wx.hideLoading();
+                  wx.hideNavigationBarLoading()
+                }
+              })
+
+            }
+          })
+        } else {
+          wx.showModal({
+            content: "哎哟，暂时没" + city +  "的天气信息",
+            showCancel: false
+          })
+          wx.hideLoading();
+          this.getWeatherMsg3('广州市');
+        }
       },
       fail: () => {
         wx.hideLoading();
         wx.showModal({
-          content: "定位失败，请重新授权",
+          content: "出错啦",
           showCancel: false,
           success: function (res) {
             // 用户点击确定
@@ -487,13 +494,15 @@ Page({
               })
               // 用户无操作
             } else {
-              wx.showModal({
-                content: "定位失败，下拉本页面刷新或到设置页面授权位置权限",
-                showCancel: false
+              wx.showToast({
+                title: '请下拉页面刷新',
+                icon: "none"
               })
             }
           }
         });
+      }
+    })
   },
 
   getWeatherMsg4: function(city) {
