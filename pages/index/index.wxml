@@ -10,23 +10,54 @@
   </view>
   <view class="icon-box">
       <!-- <icon type="info" size="50"></icon> -->
-      <image style="width: 50px; height: 50px;" src="{{ iconSrc }}" mode="aspectFill" class='image'></image>
+       <image style="width: 50px; height: 50px;" src="{{ iconSrc }}" mode="aspectFill" class='image'></image> 
+      <!-- <view style="margin:0 11px 0 -8px;" class="weather_icon d01"/> -->
       <view class="icon-box__ctn">
           <view class="icon-box__title">{{ wea }} · {{ tem }}℃</view>
-          <view class="icon-box__desc">{{ tips }}</view>
+          <view class="icon-box__desc">{{ forecast[0].dressTips + tips }}</view>
       </view>
   </view>
 </view>
-<view>
+<!-- <view>
   <button class="weui-btn" type="primary">今: {{ t1 }}</button>
   <button class="weui-btn" type="default">明: {{ t2 }}</button>
   <button class="weui-btn" type="primary">后: {{ t3 }}</button>
-  <!-- <button class="weui-btn" type="default">{{ t4 }}</button>
-  <button class="weui-btn" type="primary">{{ t5 }}</button>
-  <button class="weui-btn" type="default">{{ t6 }}</button>
-  <button class="weui-btn" type="primary">{{ t7 }}</button> -->
+</view> -->
+
+
+<view class="weui-panel weui-panel_access" style='margin-top: -5px;'>
+    <!-- <view class="weui-panel__hd">未来七天天气预测</view> -->
+    <view class="weui-panel__bd">
+        <view class="weui-media-box weui-media-box_appmsg" wx:for="{{ forecast }}">
+            <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+                <view class="weui-media-box__thumb weather_icon {{ item.icon }}"/>
+            </view>
+            <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+                <view class="weui-media-box__title"><text>{{ item.text }} · {{ item.tem }}</text></view>
+                <view class="weui-media-box__desc"><text>风向: {{ item.winDirect }} \n 风力: {{ item.winPower }} · {{ item.date }}</text></view>
+            </view>
+        </view>
+        <!-- <view class="weui-media-box weui-media-box_appmsg">
+            <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+                <view class="weui-media-box__thumb weather_icon d01"/>
+            </view>
+            <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+                <view class="weui-media-box__title">{{ t1 }}</view>
+                <view class="weui-media-box__desc">{{ t1 }}</view>
+            </view>
+        </view> -->
+        <!-- <view class="weui-media-box weui-media-box_text">
+          <view class="weui-media-box__title weui-media-box__title_in-text">{{ t1 }}</view>
+          <view class="weui-media-box__desc">{{ t1 }}</view>
+        </view>
+        <view class="weui-media-box weui-media-box_text">
+          <view class="weui-media-box__title weui-media-box__title_in-text">{{ t1 }}</view>
+          <view class="weui-media-box__desc">{{ t1 }}</view>
+        </view> -->
+    </view>
 </view>
 
+<view style='margin-bottom: 50px;'></view>
 <!-- <view class="show">{{areaPicker.address}}</view> -->
 
 <!-- 
@@ -34,7 +65,7 @@
 <template is="areaPicker" data="{{...areaPicker}}" wx:if="{{showRegions}}"/> -->
 
   <view class=".weui-footer">
-      <view class="weui-footer__text">感谢心知天气、百度地图提供数据</view>
+      <view class="weui-footer__text">感谢心知天气、中国天气网、百度地图提供数据</view>
       <view class="weui-footer__text">Copyright © 2018 Vofy.</view>
   </view>
 </view>

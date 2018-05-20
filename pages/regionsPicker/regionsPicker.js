@@ -1,4 +1,5 @@
 // pages/regionsPicker/regionsPicker.js
+// 感谢@treadpit共享的地区选择组件，组件gayhub地址: https://github.com/treadpit/wx_selectArea
 
 import initAreaPicker, { getSelectedAreaData } from '../../resources/template/regionsPicker/index.js';
 
