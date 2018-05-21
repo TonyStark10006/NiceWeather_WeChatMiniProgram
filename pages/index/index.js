@@ -172,8 +172,6 @@ Page({
 
               //更新视图
               this.setData(this.data)
-              wx.hideLoading();
-              wx.hideNavigationBarLoading()
             }
           })
         } else {
@@ -182,11 +180,13 @@ Page({
             showCancel: false
           })
           wx.hideLoading();
-          this.getWeatherMsg3('广州市');
+          wx.hideNavigationBarLoading();
+          this.getCurrentWeather('广州市');
         }
       },
       fail: () => {
         wx.hideLoading();
+        wx.hideNavigationBarLoading();
         wx.showModal({
           content: "出错啦",
           showCancel: false,
@@ -222,6 +222,8 @@ Page({
         this.setData({
           forecast: res.data.data
         })
+        wx.hideLoading();
+        wx.hideNavigationBarLoading();
       }
     })
 

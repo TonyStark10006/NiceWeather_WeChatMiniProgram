@@ -18,15 +18,9 @@
       </view>
   </view>
 </view>
-<!-- <view>
-  <button class="weui-btn" type="primary">今: {{ t1 }}</button>
-  <button class="weui-btn" type="default">明: {{ t2 }}</button>
-  <button class="weui-btn" type="primary">后: {{ t3 }}</button>
-</view> -->
-
 
 <view class="weui-panel weui-panel_access" style='margin-top: -5px;'>
-    <!-- <view class="weui-panel__hd">未来七天天气预测</view> -->
+    <view class="weui-panel__hd"><text>实时天气⤴\t|\t未来七天⤵</text></view> 
     <view class="weui-panel__bd">
         <view class="weui-media-box weui-media-box_appmsg" wx:for="{{ forecast }}">
             <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
@@ -37,23 +31,6 @@
                 <view class="weui-media-box__desc"><text>风向: {{ item.winDirect }} \n 风力: {{ item.winPower }} · {{ item.date }}</text></view>
             </view>
         </view>
-        <!-- <view class="weui-media-box weui-media-box_appmsg">
-            <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
-                <view class="weui-media-box__thumb weather_icon d01"/>
-            </view>
-            <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
-                <view class="weui-media-box__title">{{ t1 }}</view>
-                <view class="weui-media-box__desc">{{ t1 }}</view>
-            </view>
-        </view> -->
-        <!-- <view class="weui-media-box weui-media-box_text">
-          <view class="weui-media-box__title weui-media-box__title_in-text">{{ t1 }}</view>
-          <view class="weui-media-box__desc">{{ t1 }}</view>
-        </view>
-        <view class="weui-media-box weui-media-box_text">
-          <view class="weui-media-box__title weui-media-box__title_in-text">{{ t1 }}</view>
-          <view class="weui-media-box__desc">{{ t1 }}</view>
-        </view> -->
     </view>
 </view>
 
