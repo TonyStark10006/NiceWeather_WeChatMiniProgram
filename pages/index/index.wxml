@@ -14,7 +14,7 @@
       <!-- <view style="margin:0 11px 0 -8px;" class="weather_icon d01"/> -->
       <view class="icon-box__ctn">
           <view class="icon-box__title">{{ wea }} · {{ tem }}℃</view>
-          <view class="icon-box__desc">{{ forecast[0].dressTips + tips }}</view>
+          <view class="icon-box__desc">{{ forecast[0].dressTips }}{{ tips }}</view>
       </view>
   </view>
 </view>
@@ -42,7 +42,7 @@
 <template is="areaPicker" data="{{...areaPicker}}" wx:if="{{showRegions}}"/> -->
 
   <view class=".weui-footer">
-      <view class="weui-footer__text">感谢心知天气、中国天气网、百度地图提供数据</view>
-      <view class="weui-footer__text">Copyright © 2018 Vofy.</view>
+      <view class="weui-footer__text">{{ credit }}</view>
+      <view class="weui-footer__text" bindtap='showVersion'>{{ copyRight }}</view>
   </view>
 </view>

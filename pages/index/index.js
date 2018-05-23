@@ -1,4 +1,4 @@
-//const app = getApp();
+const app = getApp();
 //const thisPage = getCurrentPages;
 const apiData = require('../../resources/data.js')
 const config = require('../../config.js')
@@ -10,7 +10,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    credit: app.globalData.credit,
+    copyRight: app.globalData.copyRight
   },
 
   /**
@@ -18,6 +19,7 @@ Page({
    */
   onLoad: function (options) {
     console.log(options)//区域选择页面传入参数
+    wx.showNavigationBarLoading();
     if (!options.city) {
       wx.showLoading({
         title: '定位中...',
@@ -125,6 +127,33 @@ Page({
               resolve(res.data.result.addressComponent.city)
             }
           })
+        },
+        fail: () => {
+          wx.hideLoading();
+          wx.hideNavigationBarLoading();
+          wx.showModal({
+            content: "出错啦，请先授权获取您的位置",
+            showCancel: false,
+            success: function (res) {
+              // 用户点击确定
+              if (res.confirm) {
+                wx.openSetting({
+                  success: (res) => {
+                    wx.showToast({
+                      title: '请下拉页面刷新',
+                      icon: "none"
+                    })
+                  }
+                })
+                // 用户无操作
+              } else {
+                wx.showToast({
+                  title: '请下拉页面刷新',
+                  icon: "none"
+                })
+              }
+            }
+          });
         }
       })
     }
@@ -175,41 +204,31 @@ Page({
             }
           })
         } else {
-          wx.showModal({
-            content: "哎哟，暂时没" + city +  "的天气信息",
-            showCancel: false
-          })
-          wx.hideLoading();
-          wx.hideNavigationBarLoading();
-          this.getCurrentWeather('广州市');
-        }
-      },
-      fail: () => {
-        wx.hideLoading();
-        wx.hideNavigationBarLoading();
-        wx.showModal({
-          content: "出错啦",
-          showCancel: false,
-          success: function (res) {
-            // 用户点击确定
-            if (res.confirm) {
-              wx.openSetting({
-                success: (res) => {
-                  wx.showToast({
-                    title: '请下拉页面刷新',
-                    icon: "none"
-                  })
-                }
+           if (res.statusCode == 403) {
+              wx.showModal({
+                content: "查询太频繁啦，过一会再来吧",
+                showCancel: false
               })
-              // 用户无操作
+              // wx.reLaunch({
+              //   url: './index',
+              // })
             } else {
-              wx.showToast({
-                title: '请下拉页面刷新',
-                icon: "none"
+              wx.showModal({
+                content: "哎哟，暂时没" + city +  "的天气信息",
+                showCancel: false
               })
+              this.getCurrentWeather('广州市');
             }
+            wx.hideLoading();
+            wx.hideNavigationBarLoading();
           }
-        });
+      },
+      fail: (res) => {
+        // if (res.statusCode == 403) {
+           wx.reLaunch({
+             url: './index',
+           })
+        //}
       }
     })
   },
@@ -227,6 +246,13 @@ Page({
       }
     })
 
+  },
+
+  showVersion: function() {
+    wx.showModal({
+      content: '版本号: ' + app.globalData.version,
+      showCancel: false
+    })
   }
 
 })
