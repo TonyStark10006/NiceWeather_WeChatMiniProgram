@@ -19,6 +19,7 @@ Page({
    */
   onLoad: function (options) {
     console.log(options)//区域选择页面传入参数
+    //console.log(config.generateKey())
     wx.showNavigationBarLoading();
     if (!options.city) {
       wx.showLoading({
@@ -168,14 +169,20 @@ Page({
 
   getCurrentWeather: function(city) {
     var data = {}
+    var ts = config.generateKey().ts
+    var uid = config.generateKey().UID
+    var sig = config.generateKey().sig
+    var ttl = config.generateKey().ttl
+    
     //心知天气接口-今天天气
     wx.request({
       url: config.data.xinzhiRTWthUrl,
       data: {
         location: city,
-        ts: config.data.xinzhiTS,
-        uid: config.data.xinzhiUID,
-        sig: config.data.xinzhiEncrypted
+        ts: ts,
+        uid: uid,
+        sig: sig,
+        ttl: ttl
       },
       success: (res) => {
         if (res.statusCode == 200) {
@@ -190,9 +197,10 @@ Page({
             url: config.data.xinzhiSuggestionUrl,
             data: {
               location: city,
-              ts: config.data.xinzhiTS,
-              uid: config.data.xinzhiUID,
-              sig: config.data.xinzhiEncrypted
+              ts: ts,
+              uid: uid,
+              sig: sig,
+              ttl: ttl
             },
             success: (res) => {
               //console.log(res.data.results[0].suggestion)
