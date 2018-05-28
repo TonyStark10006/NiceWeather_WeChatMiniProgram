@@ -25,21 +25,31 @@ Page({
       wx.showLoading({
         title: '定位中...',
       })
+
       this.getLocation().then((res) => {
-        console.log(res);
         wx.showLoading({
           title: '查询中...',
         })
         this.getCurrentWeather(res)
-        this.get7DaysWeather(res);
-      });
+      })
+
+      // const currentWthPromise = this.getLocation().then((res) => this.getCurrentWeather(res));
+      // const sevenDaysPromise = this.getLocation().then((res) => this.get7DaysWeather(res));
+      // Promise.all([currentWthPromise, sevenDaysPromise]).then(() => {
+      //   console.log(app.globalData.haha)
+      //     wx.hideLoading();
+      //     wx.hideNavigationBarLoading();
+      //   }
+      // ).catch(e => console.log(e));
     } else {
       wx.showLoading({
         title: '查询中...',
       })
-      this.getCurrentWeather(options.city)
-      this.get7DaysWeather(options.city);
+      this.getCurrentWeather(options.city);
+      wx.hideLoading();
+      wx.hideNavigationBarLoading();
     }
+
 
   },
 
@@ -80,14 +90,13 @@ Page({
     wx.showLoading({
       title: '定位中...',
     })
+
     this.getLocation().then((res) => {
-      console.log(res);
       wx.showLoading({
         title: '查询中...',
       })
       this.getCurrentWeather(res)
-      this.get7DaysWeather(res);
-    });
+      })
     // 下拉动画维持时间
     setTimeout(() => {
       wx.hideNavigationBarLoading()
@@ -124,7 +133,7 @@ Page({
               pois: 1
             },
             success: (res) => {
-              wx.hideLoading()
+              //wx.hideLoading()
               resolve(res.data.result.addressComponent.city)
             }
           })
@@ -207,8 +216,9 @@ Page({
               var suggestion = res.data.results[0].suggestion;
               this.data["tips"] = "感冒" + suggestion.flu.brief + "，紫外线" + suggestion.uv.brief;
 
-              //更新视图
+              // 更新视图, 回调get7DaysWeather
               this.setData(this.data)
+              this.get7DaysWeather(city)
             }
           })
         } else {
@@ -217,26 +227,18 @@ Page({
                 content: "查询太频繁啦，过一会再来吧",
                 showCancel: false
               })
-              // wx.reLaunch({
-              //   url: './index',
-              // })
             } else {
               wx.showModal({
                 content: "哎哟，暂时没" + city +  "的天气信息",
                 showCancel: false
               })
-              this.getCurrentWeather('广州市');
             }
-            wx.hideLoading();
-            wx.hideNavigationBarLoading();
           }
       },
       fail: (res) => {
-        // if (res.statusCode == 403) {
-           wx.reLaunch({
-             url: './index',
-           })
-        //}
+        wx.reLaunch({
+          url: './index',
+        })
       }
     })
   },
@@ -246,9 +248,16 @@ Page({
       url: config.data.getWeatherMsgURL + city,
       success: (res) => {
         console.log(res.data)
-        this.setData({
-          forecast: res.data.data
-        })
+        if (res.data.status == 200) {
+          this.setData({
+            forecast: res.data.data
+          })
+        } else {
+          wx.showModal({
+            content: '没有这个城市的7天天气预测啊',
+            showCancel: true
+          })
+        }
         wx.hideLoading();
         wx.hideNavigationBarLoading();
       }
