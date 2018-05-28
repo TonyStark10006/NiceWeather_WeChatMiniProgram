@@ -46,8 +46,6 @@ Page({
         title: '查询中...',
       })
       this.getCurrentWeather(options.city);
-      wx.hideLoading();
-      wx.hideNavigationBarLoading();
     }
 
 
@@ -99,7 +97,7 @@ Page({
       })
     // 下拉动画维持时间
     setTimeout(() => {
-      wx.hideNavigationBarLoading()
+      this.hideLoading
       wx.stopPullDownRefresh()
     }, 1500);
   },
@@ -139,8 +137,7 @@ Page({
           })
         },
         fail: () => {
-          wx.hideLoading();
-          wx.hideNavigationBarLoading();
+          this.hideLoading()
           wx.showModal({
             content: "出错啦，请先授权获取您的位置",
             showCancel: false,
@@ -233,6 +230,7 @@ Page({
                 showCancel: false
               })
             }
+          this.hideLoading()
           }
       },
       fail: (res) => {
@@ -258,8 +256,7 @@ Page({
             showCancel: true
           })
         }
-        wx.hideLoading();
-        wx.hideNavigationBarLoading();
+        this.hideLoading()
       }
     })
 
@@ -270,6 +267,11 @@ Page({
       content: '版本号: ' + app.globalData.version,
       showCancel: false
     })
+  },
+
+  hideLoading: function() {
+    wx.hideLoading();
+    wx.hideNavigationBarLoading();
   }
 
 })
