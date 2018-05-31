@@ -221,7 +221,7 @@ Page({
         } else {
            if (res.statusCode == 403) {
               wx.showModal({
-                content: "查询太频繁啦，过一会再来吧",
+                content: "查询太频繁啦，下拉刷新一下或者过一会再来吧",
                 showCancel: false
               })
             } else {
@@ -252,8 +252,8 @@ Page({
           })
         } else {
           wx.showModal({
-            content: '没有这个城市的7天天气预测啊',
-            showCancel: true
+            content: "没有" + city + "的7天天气预测啊",
+            showCancel: false
           })
         }
         this.hideLoading()
