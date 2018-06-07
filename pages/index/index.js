@@ -11,7 +11,8 @@ Page({
    */
   data: {
     credit: app.globalData.credit,
-    copyRight: app.globalData.copyRight
+    copyRight: app.globalData.copyRight,
+    showSettingPage: false
   },
 
   /**
@@ -20,17 +21,48 @@ Page({
   onLoad: function (options) {
     console.log(options)//区域选择页面传入参数
     //console.log(config.generateKey())
-    wx.showNavigationBarLoading();
     if (!options.city) {
       wx.showLoading({
         title: '定位中...',
       })
-
+      // 获取位置并同步获取天气信息
       this.getLocation().then((res) => {
         wx.showLoading({
           title: '查询中...',
         })
         this.getCurrentWeather(res)
+      }, (error) => {
+        //console.log(error)
+        // 兼容处理调用设置页功能，SDK版本小于2.0.7的可以用wx.openSetting这个API，SDK不小于2.0.7要使用button组件
+        // this.hideLoading()
+        wx.hideLoading();
+        wx.showModal({
+          content: "出错啦，请先授权获取您的位置",
+          showCancel: false,
+          success: (res) => {
+            if (res.confirm) {
+              if (wx.getSystemInfoSync().SDKVersion >= '2.0.7') {
+                this.setData({
+                  showSettingPage: true
+                })
+              } else {
+                wx.openSetting({
+                  success: (res) => {
+                    wx.showToast({
+                      title: '请下拉页面刷新',
+                      icon: "none"
+                    })
+                  }
+                })
+              }
+            } else {
+              wx.showToast({
+                title: '请下拉页面刷新并点击确定',
+                icon: "none"
+              })
+            }
+          }
+        });
       })
 
       // const currentWthPromise = this.getLocation().then((res) => this.getCurrentWeather(res));
@@ -38,7 +70,6 @@ Page({
       // Promise.all([currentWthPromise, sevenDaysPromise]).then(() => {
       //   console.log(app.globalData.haha)
       //     wx.hideLoading();
-      //     wx.hideNavigationBarLoading();
       //   }
       // ).catch(e => console.log(e));
     } else {
@@ -94,7 +125,39 @@ Page({
         title: '查询中...',
       })
       this.getCurrentWeather(res)
-      })
+    }, (error) => {
+      //console.log(error)
+      // 兼容处理调用设置页功能，SDK版本小于2.0.7的可以用wx.openSetting这个API，SDK不小于2.0.7要使用button组件
+      // this.hideLoading()
+      wx.hideLoading();
+      wx.showModal({
+        content: "出错啦，请先授权获取您的位置",
+        showCancel: false,
+        success: (res) => {
+          if (res.confirm) {
+            if (wx.getSystemInfoSync().SDKVersion >= '2.0.7') {
+              this.setData({
+                showSettingPage: true
+              })
+            } else {
+              wx.openSetting({
+                success: (res) => {
+                  wx.showToast({
+                    title: '请下拉页面刷新',
+                    icon: "none"
+                  })
+                }
+              })
+            }
+          } else {
+            wx.showToast({
+              title: '请下拉页面刷新并点击确定',
+              icon: "none"
+            })
+          }
+        }
+      });
+    })
     // 下拉动画维持时间
     setTimeout(() => {
       this.hideLoading
@@ -137,30 +200,7 @@ Page({
           })
         },
         fail: () => {
-          this.hideLoading()
-          wx.showModal({
-            content: "出错啦，请先授权获取您的位置",
-            showCancel: false,
-            success: function (res) {
-              // 用户点击确定
-              if (res.confirm) {
-                wx.openSetting({
-                  success: (res) => {
-                    wx.showToast({
-                      title: '请下拉页面刷新',
-                      icon: "none"
-                    })
-                  }
-                })
-                // 用户无操作
-              } else {
-                wx.showToast({
-                  title: '请下拉页面刷新',
-                  icon: "none"
-                })
-              }
-            }
-          });
+          reject(new Error('no location permission'));
         }
       })
     }
@@ -248,7 +288,8 @@ Page({
         console.log(res.data)
         if (res.data.status == 200) {
           this.setData({
-            forecast: res.data.data
+            forecast: res.data.data,
+            showSettingPage: false
           })
         } else {
           wx.showModal({
@@ -271,7 +312,6 @@ Page({
 
   hideLoading: function() {
     wx.hideLoading();
-    wx.hideNavigationBarLoading();
   }
 
 })
