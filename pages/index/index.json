@@ -3,5 +3,8 @@
   "navigationBarBackgroundColor": "#6A5ACD",
   "navigationBarTitleText": "很赞天气",
   "navigationBarTextStyle": "white",
-  "enablePullDownRefresh": true
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "i-icon": "../../resources/template/icon-iViewUI/index"
+  }
 }

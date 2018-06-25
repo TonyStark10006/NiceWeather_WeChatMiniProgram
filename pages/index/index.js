@@ -1,6 +1,6 @@
 const app = getApp();
-//const thisPage = getCurrentPages;
-const apiData = require('../../resources/data.js')
+const thisPage = getCurrentPages;
+// const apiData = require('../../resources/data.js')
 const config = require('../../config.js')
 
 // pages/index/index.js
@@ -168,9 +168,9 @@ Page({
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {
+  // onReachBottom: function () {
   
-  },
+  // },
 
   /**
    * 用户点击右上角分享
