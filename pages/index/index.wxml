@@ -39,7 +39,7 @@
     </view>
 
     <!-- 天气信息占位区域，留白显示页脚区域 -->
-    <view style='margin-bottom: 50px;'></view>
+    <!-- <view style='margin-bottom: 50px;'></view> -->
 
   <!-- <view class="show">{{areaPicker.address}}</view> -->
   <!-- 
@@ -55,8 +55,8 @@
   </view>
 
   <!-- 页脚显示区域 -->
-  <view class=".weui-footer">
+  <!-- <view class=".weui-footer">
       <view class="weui-footer__text">{{ credit }}</view>
       <view class="weui-footer__text" bindtap='showVersion'>{{ copyRight }}</view>
-  </view>
+  </view> -->
 </view>

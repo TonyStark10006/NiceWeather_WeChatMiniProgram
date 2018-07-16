@@ -1,0 +1,13 @@
+/* pages/mix/duokanSpecialOfferBook/duokanSpecialOfferBook.wxss */
+.price {
+  color: red;
+}
+
+image{
+	transition: all .3s ease;
+	opacity: 0;
+}
+
+.active{
+	opacity: 1;
+}

@@ -1,8 +1,8 @@
 //app.js
 App({
   globalData: {
-    version: "1.3.14 (180626)",
-    credit: "感谢心知天气、中国天气网、百度地图提供数据",
-    copyRight: "Copyright © 2018 Vofy. 数据仅供参考，不负任何形式责任"
+    version: "2.0.1 (180714)",
+    credit: "感谢心知天气、中国天气网、百度地图提供数据。\n数据仅供参考",
+    copyRight: "Copyright © 2018 Vofy."
   }
 })

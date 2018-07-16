@@ -1,10 +1,12 @@
 {
-  "pages":[
+  "pages": [
     "pages/index/index",
     "pages/regionsPicker/regionsPicker",
-    "pages/logs/logs"
+    "pages/logs/logs",
+    "pages/moreFeature/moreFeature",
+    "pages/mix/discountBook/discountBook"
   ],
-  "window":{
+  "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#6A5ACD",
     "navigationBarTitleText": "很赞天气",
@@ -16,5 +18,23 @@
     "connectSocket": 5000,
     "downloadFile": 10000,
     "uploadFile": 10000
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#000000",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "天气",
+        "iconPath": "resources/img/sun.png",
+        "selectedIconPath": "resources/img/sun-filled.png"
+      },
+      {
+        "pagePath": "pages/moreFeature/moreFeature",
+        "text": "更多",
+        "iconPath": "resources/img/more.png",
+        "selectedIconPath": "resources/img/more-filled.png"
+      }
+    ]
   }
 }

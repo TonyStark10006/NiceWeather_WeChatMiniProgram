@@ -1,0 +1,36 @@
+<!--pages/MoreFeature.wxml-->
+<view class="weui-cells__title">电子书</view>
+<view class="weui-cells weui-cells_after-title">
+    <navigator url="/pages/mix/discountBook/discountBook?target=duokanDiscountBook" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+        <view class="weui-cell__bd">多看限时折扣</view>
+        <view class="weui-cell__ft weui-cell__ft_in-access">每天更新</view>
+    </navigator>
+    <navigator url="/pages/mix/discountBook/discountBook?target=duokanSpecialOfferBook" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+        <view class="weui-cell__bd">多看限时特价</view>
+        <view class="weui-cell__ft weui-cell__ft_in-access">每天更新</view>
+    </navigator>
+    <!-- <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+        <view class="weui-cell__bd">cell standard</view>
+        <view class="weui-cell__ft weui-cell__ft_in-access">说明文字</view>
+    </navigator> -->
+</view>
+
+<view class="weui-cells__title">设置</view>
+<view class="weui-cells weui-cells_after-title">
+    <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+        <view class="weui-cell__bd">马上就来</view>
+        <view class="weui-cell__ft weui-cell__ft_in-access">{{ version }}</view>
+    </navigator>
+</view>
+
+<view class="weui-panel">
+  <view class="weui-panel__bd">
+      <view class="weui-media-box weui-media-box_text">
+          <view class="weui-media-box__title weui-media-box__title_in-text">鸣谢</view>
+          <view class="weui-media-box__desc"><text>{{ credit }}</text></view>
+          <view class="weui-media-box__info">
+              <view class="weui-media-box__info__meta">{{ copyRight }}</view>
+          </view>
+      </view>
+  </view>
+</view>

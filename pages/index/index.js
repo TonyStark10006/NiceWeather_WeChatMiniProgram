@@ -10,8 +10,6 @@ Page({
    * 页面的初始数据
    */
   data: {
-    credit: app.globalData.credit,
-    copyRight: app.globalData.copyRight,
     showSettingPage: false
   },
 
@@ -274,6 +272,10 @@ Page({
           }
       },
       fail: (res) => {
+        wx.showToast({
+          title: '网络有点问题，重新操作一下吧',
+          icon: "none"
+        })
         wx.reLaunch({
           url: './index',
         })

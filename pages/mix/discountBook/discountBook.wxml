@@ -1,0 +1,23 @@
+<!--pages/mix/duokanSpecialOfferBook/duokanSpecialOfferBook.wxml style="display: {{ show ? 'flex' : 'none' }};"-->
+<view class="weui-panel weui-panel_access">
+  <view class="weui-panel__hd">{{ title }}(点击复制书名)</view> 
+  <view class="weui-panel__bd">
+      <view class="weui-media-box weui-media-box_appmsg item" hover-class="weui-cell_active" wx:for="{{ dataList }}" wx:key="{{ index }}" bindtap='copyName' data-name="{{ item.title }}">
+          <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+              <image class="weui-media-box__thumb {{item.show ? 'active': ''}}" src="{{ item.show ? item.cover : '' }}"/>
+          </view>
+          <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+              <view class="weui-media-box__title">
+                <text>{{ item.title }}</text>
+                <text class='price'>\n现价： {{ item.price }}</text>
+              </view>
+              <!-- <text>现价： {{ item.price }}</text> -->
+              <view class="weui-media-box__desc">{{ item.desc }}</view>
+          </view>
+      </view>
+  </view>
+</view>
+
+<view class="weui-loadmore weui-loadmore_line">
+    <view class="weui-loadmore__tips weui-loadmore__tips_in-line">加载完了呀~</view>
+</view>
