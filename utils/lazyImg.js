@@ -44,8 +44,17 @@ function copyName(e) {
   })
 }
 
+function previewImg(that, e) {
+  wx.previewImage({
+    current: e.currentTarget.dataset.src,
+    urls: that.data.imgList
+  })
+}
+
+
 module.exports = {
   showImg: showImg,
   copyName: copyName,
-  getDeviceHeight: getDeviceHeight
+  getDeviceHeight: getDeviceHeight,
+  previewImg: previewImg
 }

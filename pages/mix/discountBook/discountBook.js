@@ -43,13 +43,6 @@ Page({
       title: title
     })
 
-    // wx.getSystemInfo({  // 获取页面可视区域的高度
-    //   success: (res) =>{
-    //     this.setData({
-    //       height: res.screenHeight
-    //     })
-    //   },
-    // })
     var that = this
     lazyImg.getDeviceHeight(that)
 
@@ -62,8 +55,13 @@ Page({
             showCancel: false
           })
         } else {
+          var imgList = []
+          for (var i = 0; i < res.data.length; i++) {
+            imgList[i] = res.data[i].cover
+          }
           this.setData({
-            dataList: res.data
+            dataList: res.data,
+            imgList: imgList
           })
           lazyImg.showImg(that, this.data.dataList)
         }
@@ -122,50 +120,19 @@ Page({
   
   },
 
-  // showImg: function(data) {
-  //   let height = this.data.height  // 页面的可视高度
-
-  //   wx.createSelectorQuery().selectAll('.item').boundingClientRect((ret) => {
-  //     ret.forEach((item, index) => {
-  //       if (item.top <= height) { // 判断是否在显示范围内
-  //         data[index].show = true // 根据下标改变状态
-  //       }
-  //     })
-  //     this.setData({
-  //       dataList: data
-  //     })
-  //   }).exec()
-
-  // },
-
   onPageScroll: function() {
     var that = this
     lazyImg.showImg(that, this.data.dataList)
-    // this.showImg(this.data.dataList)
   },
-
-  // copyName: function(e) {
-  //   //console.log(e)
-  //   console.log(e.currentTarget.dataset.name)
-  //   wx.setClipboardData({
-  //     data: e.currentTarget.dataset.name,
-  //     // success: function (res) {
-  //       // wx.showModal({
-  //       //   content: '已经复制书名到粘贴板啦',
-  //       //   showCancel: false
-  //       // })
-  //       // wx.getClipboardData({
-  //       //   success: function (res) {
-  //       //     console.log(res.data) // data
-  //       //   }
-  //       // })
-  //     // }
-  //   })
-  // }
 
   copyName: function(e) {
     lazyImg.copyName(e)
   },
+
+  previewImg: function(e) {
+    var that = this
+    lazyImg.previewImg(that, e)
+  }
 
 
 

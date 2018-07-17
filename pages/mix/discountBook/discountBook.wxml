@@ -4,12 +4,13 @@
   <view class="weui-panel__bd">
       <view class="weui-media-box weui-media-box_appmsg item" hover-class="weui-cell_active" wx:for="{{ dataList }}" wx:key="{{ index }}" bindtap='copyName' data-name="{{ item.title }}">
           <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
-              <image class="weui-media-box__thumb {{item.show ? 'active': ''}}" src="{{ item.show ? item.cover : '' }}"/>
+              <image class="weui-media-box__thumb {{item.show ? 'active': ''}}" src="{{ item.show ? item.cover : '' }}" catchtap='previewImg' data-src='{{ item.cover }}'/>
           </view>
           <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
               <view class="weui-media-box__title">
                 <text>{{ item.title }}</text>
-                <text class='price'>\n现价： {{ item.price }}</text>
+                <text class='price'>\n{{ item.price }}</text>
+                <text wx:if="{{ item.discount }}">折扣：{{ item.discount }}</text>
               </view>
               <!-- <text>现价： {{ item.price }}</text> -->
               <view class="weui-media-box__desc">{{ item.desc }}</view>
