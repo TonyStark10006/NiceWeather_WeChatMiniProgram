@@ -10,7 +10,7 @@
               <view class="weui-media-box__title">
                 <text>{{ item.title }}</text>
                 <text class='price'>\n{{ item.price }}</text>
-                <text wx:if="{{ item.discount }}">折扣：{{ item.discount }}</text>
+                <text wx:if="{{ item.discount }}">\t 下单{{ item.discount }}折</text>
               </view>
               <!-- <text>现价： {{ item.price }}</text> -->
               <view class="weui-media-box__desc">{{ item.desc }}</view>
