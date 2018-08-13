@@ -290,6 +290,7 @@ Page({
         console.log(res.data)
         if (res.data.status == 200) {
           this.setData({
+            updateTime: res.data.updateTime,
             forecast: res.data.data,
             showSettingPage: false
           })

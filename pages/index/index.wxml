@@ -24,7 +24,7 @@
 
     <!-- 7天预测天气信息显示区域 -->
     <view class="weui-panel weui-panel_access" style='margin-top: -5px;'>
-        <view class="weui-panel__hd"><text>实时天气⤴\t|\t未来七天⤵</text></view>
+        <view class="weui-panel__hd"><text>实时天气⤴\t|\t未来七天⤵\t(\t{{ updateTime }}\t)</text></view>
         <view class="weui-panel__bd">
             <view class="weui-media-box weui-media-box_appmsg" wx:for="{{ forecast }}">
                 <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
