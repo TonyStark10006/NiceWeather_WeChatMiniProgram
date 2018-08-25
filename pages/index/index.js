@@ -206,8 +206,11 @@ Page({
   },
 
   getSelecedData() {
+    // wx.navigateTo({
+    //   url: '../regionsPicker/regionsPicker',
+    // })
     wx.navigateTo({
-      url: '../regionsPicker/regionsPicker',
+      url: '../regionsPicker-iViewUI/index',
     })
   },
 
@@ -259,9 +262,10 @@ Page({
         } else {
            if (res.statusCode == 403) {
               wx.showModal({
-                content: "查询太频繁啦，下拉刷新一下或者过一会再来吧",
+                content: "查询太频繁或者暂没" + city + "的天气信息(目前不支持地级市)",
                 showCancel: false
               })
+              this.getCurrentWeather('北京市')
             } else {
               wx.showModal({
                 content: "哎哟，暂时没" + city +  "的天气信息",

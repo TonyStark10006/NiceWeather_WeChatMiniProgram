@@ -4,7 +4,8 @@
     "pages/regionsPicker/regionsPicker",
     "pages/logs/logs",
     "pages/moreFeature/moreFeature",
-    "pages/mix/discountBook/discountBook"
+    "pages/mix/discountBook/discountBook",
+    "pages/regionsPicker-iViewUI/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

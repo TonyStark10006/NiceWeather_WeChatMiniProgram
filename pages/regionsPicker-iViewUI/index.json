@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "地区选择",
+  "usingComponents": {
+    "i-index": "../../resources/template/regionsPicker-iViewUI/index/index",
+    "i-index-item": "../../resources/template/regionsPicker-iViewUI/index-item/index"
+  }
+}
