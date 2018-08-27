@@ -1,11 +1,11 @@
 {
   "pages": [
-    "pages/index/index",
+    "pages/regionsPicker-iViewUI/index",
     "pages/regionsPicker/regionsPicker",
     "pages/logs/logs",
     "pages/moreFeature/moreFeature",
     "pages/mix/discountBook/discountBook",
-    "pages/regionsPicker-iViewUI/index"
+    "pages/index/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

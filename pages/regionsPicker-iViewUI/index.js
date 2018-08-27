@@ -1,7 +1,9 @@
 import { cities } from './city';
 Page({
     data : {
-        cities : []
+      cities: [],
+      inputShowed: false,
+      inputVal: ""
     },
     getSelectedCity(e) {
       console.log(e)
@@ -25,6 +27,7 @@ Page({
             let firstName = item.pinyin.substring(0,1);
             let index = words.indexOf( firstName );
             storeCity[index].list.push({
+                pinyin : item.pinyin,
                 name : item.name,
                 key : firstName
             });
@@ -33,5 +36,27 @@ Page({
         this.setData({
             cities : this.data.cities
         })
-    }
+  },
+  showInput: function () {
+    this.setData({
+      inputShowed: true
+    });
+  },
+  hideInput: function () {
+    this.setData({
+      inputVal: "",
+      inputShowed: false
+    });
+  },
+  clearInput: function () {
+    this.setData({
+      inputVal: ""
+    });
+  },
+  inputTyping: function (e) {
+    console.log(e.detail.value)
+    this.setData({
+      inputVal: e.detail.value
+    });
+  }
 });
