@@ -24,9 +24,12 @@
 
     <!-- 7天预测天气信息显示区域 -->
     <view class="weui-panel weui-panel_access" style='margin-top: -5px;'>
-        <view class="weui-panel__hd"><text>实时天气⤴\t|\t未来七天⤵\t(\t{{ updateTime }}\t)</text></view>
+        <view class="weui-panel__hd">
+            <text>实时天气⤴\t|\t未来七天⤵\t(\t{{ updateTime }}\t)</text>
+        </view>
         <view class="weui-panel__bd">
-            <view class="weui-media-box weui-media-box_appmsg" wx:for="{{ forecast }}">
+
+            <view class="weui-media-box weui-media-box_appmsg" wx:for="{{ forecast }}" wx:key="date">
                 <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
                     <view class="weui-media-box__thumb weather_icon {{ item.icon }}"/>
                 </view>
@@ -34,6 +37,7 @@
                     <view class="weui-media-box__title"><text>{{ item.text }} · {{ item.tem }}</text></view>
                     <view class="weui-media-box__desc"><text>风向: {{ item.winDirect }} \n 风力: {{ item.winPower }} · {{ item.date }}</text></view>
                 </view>
+                
             </view>
         </view>
     </view>

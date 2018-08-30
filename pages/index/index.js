@@ -265,7 +265,7 @@ Page({
                 content: "查询太频繁或者暂没" + city + "的天气信息(目前不支持地级市)",
                 showCancel: false
               })
-              this.getCurrentWeather('北京市')
+              // this.getCurrentWeather('北京市')
             } else {
               wx.showModal({
                 content: "哎哟，暂时没" + city +  "的天气信息",

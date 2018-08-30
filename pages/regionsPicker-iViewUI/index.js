@@ -3,7 +3,8 @@ Page({
     data : {
       cities: [],
       inputShowed: false,
-      inputVal: ""
+      inputVal: "",
+      searchResultShow: false
     },
     getSelectedCity(e) {
       console.log(e)
@@ -35,7 +36,7 @@ Page({
         this.data.cities = storeCity;
         this.setData({
             cities : this.data.cities
-        })
+      })
   },
   showInput: function () {
     this.setData({
@@ -50,7 +51,8 @@ Page({
   },
   clearInput: function () {
     this.setData({
-      inputVal: ""
+      inputVal: "",
+      searchResultShow: false
     });
   },
   inputTyping: function (e) {
@@ -58,5 +60,52 @@ Page({
     this.setData({
       inputVal: e.detail.value
     });
-  }
+  },
+  searchRegion: function (event) {
+    // let query = wx.createSelectorQuery()
+    // query.select('#Jiangmen').boundingClientRect(function (res) {
+    //   console.log(res)
+    //   wx.pageScrollTo({
+    //     scrollTop: res.top,
+    //   })
+    //   res[0].top       // #the-id节点的上边界坐标
+    //   res[1].scrollTop // 显示区域的竖直滚动位置
+    // })
+    // query.exec()
+    if (event.detail.value === '') {
+      return
+    } else {
+      let arr = [{}]
+      let num = 0
+      arr[0].list = []
+      for (let i in this.data.cities) {
+        for (let j in this.data.cities[i]['list']) {
+          if (this.data.cities[i]['list'][j].name.indexOf(event.detail.value) >= 0 || 
+            this.data.cities[i]['list'][j].pinyin.indexOf(this.caseTransfer(event.detail.value)) >= 0) {
+            arr[0].key = this.data.cities[i]['list'][j].key
+            arr[0].list[num] = this.data.cities[i]['list'][j]
+            ++num
+          }
+        }
+      }
+      console.log(arr)
+      if (arr.length == 0) {
+        wx.showToast({
+          title: '没有该城市',
+          icon: 'none'
+        })
+        return
+      } else {
+        this.setData({
+          searchResult: arr,
+          searchResultShow: true
+        })
+      }
+    }
+  },
+
+  // 将用户输入的拼音转成首字母大写
+  caseTransfer: function (str) {
+    return str.toLowerCase().replace(/( |^)[a-z]/g, (L) => L.toUpperCase());
+  } 
 });

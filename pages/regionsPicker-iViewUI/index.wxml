@@ -2,28 +2,29 @@
   <view class="weui-search-bar__form">
       <view class="weui-search-bar__box">
           <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
-          <input type="text" class="weui-search-bar__input" placeholder="搜索" value="{{inputVal}}" focus="{{inputShowed}}" bindinput="inputTyping" />
+          <input type="text" class="weui-search-bar__input" placeholder="搜索(目前不支持地级市)" value="{{inputVal}}" focus="{{inputShowed}}" bindinput="inputTyping" bindconfirm="searchRegion"/>
           <view class="weui-icon-clear" wx:if="{{inputVal.length > 0}}" bindtap="clearInput">
               <icon type="clear" size="14"></icon>
           </view>
       </view>
   </view>
 </view>
-<view class="i-index-demo">
+<view class="i-index">
     <i-index height="100%" bind:change="onChange">
         <i-index-item 
-            wx:for="{{ cities }}" 
+            wx:for="{{ searchResultShow ? searchResult : cities }}" 
             wx:for-index="index" 
             wx:key="{{index}}" 
             wx:for-item="item" name="{{item.key}}">
             <view 
-                class="i-index-demo-item" 
+                class="i-index-item" 
                 wx:for="{{item.list}}" 
                 wx:for-index="in" 
                 wx:key="{{in}}" 
                 wx:for-item="it"
                 data-it-name='{{ it.name }}'
                 data-it-pinyin='{{ it.pinyin }}'
+                id='{{ it.pinyin }}'
                 catchtap='getSelectedCity'>
                 {{it.name}}
             </view>
