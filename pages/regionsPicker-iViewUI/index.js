@@ -75,17 +75,35 @@ Page({
     if (event.detail.value === '') {
       return
     } else {
-      let arr = [{}]
+      // 定义数组结构，根据iView的索引选择器组件的数据结构定义
+      let arr = []
       let num = 0
-      arr[0].list = []
+      let num1 = 0
+      // 历遍A-Z的地名集合
       for (let i in this.data.cities) {
+        arr[num1] = {}
+        arr[num1].list = []
+        // 历遍具体某个字母的地名集合，匹配中文字或拼音
         for (let j in this.data.cities[i]['list']) {
           if (this.data.cities[i]['list'][j].name.indexOf(event.detail.value) >= 0 || 
             this.data.cities[i]['list'][j].pinyin.indexOf(this.caseTransfer(event.detail.value)) >= 0) {
-            arr[0].key = this.data.cities[i]['list'][j].key
-            arr[0].list[num] = this.data.cities[i]['list'][j]
+            arr[num1].key = this.data.cities[i]['list'][j].key
+            arr[num1].list[num] = this.data.cities[i]['list'][j]
             ++num
           }
+        }
+        // 重置某个字母地名集合的搜索结果索引
+        num = 0
+
+        // 去除最后一个空数组
+        if (!('key' in arr[num1]) && i == 25) {
+          arr.pop()
+          break
+        }
+
+        // 搜索结果不为空则递增索引
+        if (arr[num1].list.length > 0) {
+          ++num1
         }
       }
       console.log(arr)
