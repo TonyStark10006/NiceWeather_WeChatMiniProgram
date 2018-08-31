@@ -86,7 +86,7 @@ Page({
         // 历遍具体某个字母的地名集合，匹配中文字或拼音
         for (let j in this.data.cities[i]['list']) {
           if (this.data.cities[i]['list'][j].name.indexOf(event.detail.value) >= 0 || 
-            this.data.cities[i]['list'][j].pinyin.indexOf(this.caseTransfer(event.detail.value)) >= 0) {
+            this.data.cities[i]['list'][j].pinyin.toLowerCase().indexOf(event.detail.value.toLowerCase()) >= 0) {
             arr[num1].key = this.data.cities[i]['list'][j].key
             arr[num1].list[num] = this.data.cities[i]['list'][j]
             ++num
