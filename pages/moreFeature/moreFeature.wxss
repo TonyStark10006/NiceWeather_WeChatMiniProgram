@@ -1,1 +1,10 @@
 /* pages/MoreFeature.wxss */
+.weui-cells__title {
+    margin-top: 0;
+    padding-top: 0.77em;
+}
+
+.dark-bg {
+    background-color: #000000;
+    color: aliceblue;
+}

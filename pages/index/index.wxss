@@ -1,5 +1,10 @@
 /* pages/index/test.wxss */
 /* @import '../../resources/template/index.wxss';  */
+@import '../../resources/darkmode.wxss';
+page {
+	height: 170%;
+}
+
 icon {
     margin-right: 21px;
     margin-left: 8px;

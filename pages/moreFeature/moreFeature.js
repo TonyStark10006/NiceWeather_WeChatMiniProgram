@@ -15,7 +15,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-  
+    
   },
 
   /**
@@ -29,7 +29,12 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-  
+    app.switchNavigationBar(app.globalData.darkMode)
+    console.log(app.globalData.darkMode)
+    this.setData({
+      darkMode: app.globalData.darkMode
+    })
+    app.switchTabBar(app.globalData.darkMode)
   },
 
   /**

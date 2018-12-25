@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/settings/settings",
     "pages/regionsPicker/regionsPicker",
     "pages/logs/logs",
     "pages/moreFeature/moreFeature",

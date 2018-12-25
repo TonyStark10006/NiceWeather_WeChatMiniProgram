@@ -1,4 +1,5 @@
 import { cities } from './city';
+const app = getApp()
 Page({
     data : {
       cities: [],
@@ -125,5 +126,14 @@ Page({
   // 将用户输入的拼音转成首字母大写
   caseTransfer: function (str) {
     return str.toLowerCase().replace(/( |^)[a-z]/g, (L) => L.toUpperCase());
-  } 
+  },
+
+  onShow: function() {
+    app.switchNavigationBar(app.globalData.darkMode)
+    console.log(app.globalData.darkMode)
+    this.setData({
+      darkMode: app.globalData.darkMode
+    })
+    app.switchTabBar(app.globalData.darkMode)
+  }
 });

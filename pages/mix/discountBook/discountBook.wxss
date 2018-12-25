@@ -1,4 +1,9 @@
 /* pages/mix/duokanSpecialOfferBook/duokanSpecialOfferBook.wxss */
+.dark-bg {
+	background-color: #000000;
+	color: aliceblue;
+}
+
 .price {
   color: red;
 }

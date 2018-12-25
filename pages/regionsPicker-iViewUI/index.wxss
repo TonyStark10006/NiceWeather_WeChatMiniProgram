@@ -7,3 +7,8 @@
     border-bottom:#ddd solid 1rpx;
     font-size:14px;
 }
+
+.dark-bg {
+	background-color: #000000;
+	color: aliceblue;
+}

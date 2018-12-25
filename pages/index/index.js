@@ -2,6 +2,9 @@ const app = getApp();
 const thisPage = getCurrentPages;
 // const apiData = require('../../resources/data.js')
 const config = require('../../config.js')
+// wx.cloud.init({
+//   traceUser: true
+// })
 
 // pages/index/index.js
 Page({
@@ -77,6 +80,17 @@ Page({
       this.getCurrentWeather(options.city);
     }
 
+    // wx.cloud.callFunction({
+    //   name: "add",
+    //   data: {
+    //     a: 1,
+    //     b: 2
+    //   },
+    //   success: function(res) {
+    //     console.log("云函数add的运算结果如下：")
+    //     console.log(res.result)
+    //   }
+    // })
 
   },
 
@@ -94,6 +108,18 @@ Page({
     // initAreaPicker({
     //   hideDistrict: true, // 是否隐藏区县选择栏，默认显示
     // });
+    // 因为onshow时获取到值的时间比设置globalData值的时间点要早，所以要从本地储存获取darkMode的值
+    wx.getStorage({
+      key: 'darkMode',
+      success: (res) => {
+        this.setData({
+          darkMode: res.data
+        })
+        console.log(res)
+        app.switchNavigationBar(res.data)
+        app.switchTabBar(res.data)
+      }
+    });
   },
 
   /**

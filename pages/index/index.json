@@ -5,7 +5,6 @@
   "navigationBarTextStyle": "white",
   "enablePullDownRefresh": true,
   "usingComponents": {
-    "i-icon": "../../resources/template/icon-iViewUI/index",
-    "i-card": "../../resources/template/card-iViewUI/index"
+    "i-icon": "../../resources/template/icon-iViewUI/index"
   }
 }

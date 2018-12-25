@@ -1,6 +1,8 @@
 // pages/mix/duokanSpecialOfferBook/duokanSpecialOfferBook.js
 const config = require('../../../config.js')
 const lazyImg = require('../../../utils/lazyImg.js')
+const app = getApp();
+
 Page({
 
   /**
@@ -82,7 +84,11 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-  
+    app.switchNavigationBar(app.globalData.darkMode)
+    console.log(app.globalData.darkMode)
+    this.setData({
+      darkMode: app.globalData.darkMode
+    })
   },
 
   /**

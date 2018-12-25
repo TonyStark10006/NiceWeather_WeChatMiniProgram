@@ -1,11 +1,11 @@
 <!-- index.wxml  -->
-<view class='container'>
+<view class="container {{ darkMode ? 'dark-box dark-bg' : ''}}">
 
   <!-- 天气信息显示区域 -->
   <view wx:if="{{ !showSettingPage }}">
 
     <!-- 即使天气显示区域 -->
-    <view id='today'>
+    <view id='today' class="{{ darkMode ? 'dark-bg' : ''}}">
       <view class="icon-box">
           <i-icon id="location" type="coordinates_fill" size="50" color="#09BB07"/> 
           <!-- <icon type="success" size="34"#2D76B6></icon>     -->
@@ -23,7 +23,7 @@
     </view>
 
     <!-- 7天预测天气信息显示区域 -->
-    <view class="weui-panel weui-panel_access" style='margin-top: -5px;'>
+    <view class="weui-panel weui-panel_access {{ darkMode ? 'dark-bg' : ''}}" style='margin-top: -5px;'>
         <view class="weui-panel__hd">
             <text>实时天气⤴\t|\t未来七天⤵\t(\t{{ updateTime }}\t)</text>
         </view>
@@ -53,7 +53,7 @@
   </view>
 
   <!-- 授权提示区域 -->
-  <view wx:if="{{ showSettingPage }}" id='showSettingPage'>
+  <view wx:if="{{ showSettingPage }}" id='showSettingPage' class="{{ darkMode ? 'dark-bg' : ''}}">
     <view id='showSettingPageText'>授权完成后返回并下拉本页面刷新</view>
     <button open-type="openSetting" id='settingButton' class="weui-btn" type="primary" plain="true">点击打开授权设置页</button>
   </view>

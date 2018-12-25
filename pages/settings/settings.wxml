@@ -1,0 +1,61 @@
+<!--pages/settings.wxml-->
+<!-- <switch bindchange="switchChange" color ="#F39C89" class="switch"/> -->
+<view class="{{ switch1 ? 'dark-box dark-bg' : ''}}">
+<view class="weui-cells__title">外观</view>
+<view class="weui-cells weui-cells_after-title {{ switch1 ? 'dark-box dark-bg' : ''}}">
+    <view class="weui-cell weui-cell_switch">
+        <view class="weui-cell__bd">
+            <view class="weui-label">夜间模式</view>
+        </view>
+        <view class="weui-cell__ft">
+            <!-- <i-switch value="{{switch1}}" size="large" bind:change="onChange" slot="footer">
+                <view slot="open">开启</view>
+                <view slot="close">关闭</view>
+            </i-switch> -->
+            <switch bindchange="switch2Change" checked="{{ switch1 }}"/>
+        </view>
+    </view>
+    <view class="weui-cell weui-cell_switch" wx:if="{{ switch1 }}">
+        <view class="weui-cell__bd">
+            <view class="weui-label">按时间段开启夜间模式</view>
+        </view>
+        <view class="weui-cell__ft">
+            <switch bindchange="switch3Change" />
+        </view>
+    </view>
+    <!-- <view class="weui-cell" wx:if="{{ switch2 }}"> -->
+        <!-- <view class="weui-cell__bd">
+            <picker mode="time" value="{{time}}" start="09:01" end="21:01" bindchange="bindTimeChange">
+                <view class="weui-input">开始时间：{{ time }}</view>
+            </picker>
+            <picker class="weui-btn" mode="time" value="{{time1}}" start="09:01" end="21:01" bindchange="bindTimeChange">
+                <view class="weui-input">结束时间：{{ time1 }}</view> -->
+                <!-- <button type="default">{{ time1 }}</button> -->
+            <!-- </picker> -->
+        <!-- </view> -->
+    <view class="weui-cell weui-cell_input" wx:if="{{ switch1 && switch2 }}">
+        <view class="weui-cell__hd">
+            <view class="weui-label">开始时间</view>
+        </view>
+        <view class="weui-cell__bd">
+            <picker mode="time" value="{{time}}" bindchange="bindTimeChange">
+                <view class="weui-input">{{time}}</view>
+            </picker>
+        </view>
+    </view>
+    <view class="weui-cell weui-cell_input" wx:if="{{ switch1 && switch2 }}">
+        <view class="weui-cell__hd">
+            <view class="weui-label">结束时间</view>
+        </view>
+        <view class="weui-cell__bd">
+            <picker mode="time" value="{{time1}}" bindchange="bindTimeChange">
+                <view class="weui-input">{{time1}}</view>
+            </picker>
+        </view>
+    </view>
+        <!-- <view class="weui-cell__ft">
+            <switch />
+        </view> -->
+    <!-- </view> -->
+</view>
+</view>
