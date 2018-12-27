@@ -1,8 +1,8 @@
 <!--pages/settings.wxml-->
 <!-- <switch bindchange="switchChange" color ="#F39C89" class="switch"/> -->
-<view class="{{ switch1 ? 'dark-box dark-bg' : ''}}">
+<view class="{{ darkMode ? 'dark-box dark-bg' : ''}}">
 <view class="weui-cells__title">外观</view>
-<view class="weui-cells weui-cells_after-title {{ switch1 ? 'dark-box dark-bg' : ''}}">
+<view class="weui-cells weui-cells_after-title {{ darkMode ? 'dark-box dark-bg' : ''}}">
     <view class="weui-cell weui-cell_switch">
         <view class="weui-cell__bd">
             <view class="weui-label">夜间模式</view>
@@ -20,7 +20,7 @@
             <view class="weui-label">按时间段开启夜间模式</view>
         </view>
         <view class="weui-cell__ft">
-            <switch bindchange="switch3Change" />
+            <switch bindchange="switch3Change" checked="{{ switch2 }}" />
         </view>
     </view>
     <!-- <view class="weui-cell" wx:if="{{ switch2 }}"> -->
@@ -38,8 +38,8 @@
             <view class="weui-label">开始时间</view>
         </view>
         <view class="weui-cell__bd">
-            <picker mode="time" value="{{time}}" bindchange="bindTimeChange">
-                <view class="weui-input">{{time}}</view>
+            <picker mode="time" value="{{time1}}" bindchange="bindTime1Change">
+                <view class="weui-input">{{time1}}</view>
             </picker>
         </view>
     </view>
@@ -48,8 +48,8 @@
             <view class="weui-label">结束时间</view>
         </view>
         <view class="weui-cell__bd">
-            <picker mode="time" value="{{time1}}" bindchange="bindTimeChange">
-                <view class="weui-input">{{time1}}</view>
+            <picker mode="time" value="{{time2}}" bindchange="bindTime2Change">
+                <view class="weui-input">{{time2}}</view>
             </picker>
         </view>
     </view>

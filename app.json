@@ -38,5 +38,10 @@
         "selectedIconPath": "resources/img/more-filled.png"
       }
     ]
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息用于查询你所处城市的天气"
+    }
   }
 }

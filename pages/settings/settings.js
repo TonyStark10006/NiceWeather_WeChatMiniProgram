@@ -8,28 +8,14 @@ Page({
   data: {
     switch1 : false,
     switch2 : false,
-    time: "23:00",
-    time1: "6:00"
+    time1: "14:00",
+    time2: "6:00"
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var that = this
-    wx.getStorage({
-      key: 'darkMode',
-      success: (result)=>{
-        console.log(result)
-        if (result.data === true) {
-          that.setData({
-            switch1 : result.data
-          })
-          app.switchNavigationBar(result.data)
-        }
-      }
-    });
-
   },
 
   /**
@@ -43,7 +29,43 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    var that = this
+    wx.getStorage({
+      key: 'darkMode',
+      success: (result)=>{
+        console.log(result)
+        if (result.data || app.globalData.darkModeByTime) {
+          that.setData({
+            switch1 : true
+            //darkMode: result.data
+          })
+          //app.switchNavigationBar(true)
+        }
+      }
+    })
+    // wx.getStorage({
+    //   key: 'darkModeByTime',
+    //   success: (result)=>{
+        
+    //   }
+    // })
+    app.switchDarkMode(this)
+    console.log(app.globalData.darkModeByTime)
+    if (app.globalData.darkModeByTime) {
+      if (app.globalData.darkModeStartTime) {
+        that.setData({
+          switch2 : true,
+          time1: app.globalData.darkModeStartTime,
+          time2: app.globalData.darkModeStopTime
+        })
+      } else {
+        that.setData({
+          switch2 : true,
+          time1: this.data.time1,
+          time2: this.data.time2
+        })
+      }
+    }
   },
 
   /**
@@ -91,26 +113,32 @@ Page({
   // },
 
   switch2Change(e) {
-    console.log(e)
     app.globalData.darkMode = e.detail.value
-    console.log("黑暗模式的全局变量值为" + app.globalData.darkMode)
     this.setData({
       'switch1' : e.detail.value,
-      'switch2' : !e.detail.value
+      'switch2' : !e.detail.value,
+      'darkMode' : e.detail.value
     })
 
     // 改变导航栏背景颜色
     this.switchNavigationBar(app.globalData.darkMode)
     // 本地保存模式状态
-    wx.setStorage({
-      key: 'darkMode',
-      data: app.globalData.darkMode,
-      success: () => {
-        console.log("darkMode变量保存成功")
-      }
-    })
-
-
+    if (e.detail.value) {
+      wx.setStorage({
+        key: 'darkMode',
+        data: e.detail.value
+      })
+    } else {
+      app.globalData.darkModeByTime = e.detail.value
+      wx.setStorage({
+        key: 'darkMode',
+        data: e.detail.value
+      })
+      wx.setStorage({
+        key: 'darkModeByTime',
+        data: e.detail.value
+      })
+    }
     // 调整tabBar颜色
     // wx.setTabBarStyle({
     //   color: '#0000FF',
@@ -121,17 +149,72 @@ Page({
   },
 
   switch3Change: function(e) {
-    app.globalData.darkMode = e.detail.value
-    console.log("黑暗模式的全局变量值为" + app.globalData.darkMode)
+    // app.globalData.darkMode = e.detail.value
+    // console.log("黑暗模式的全局变量值为" + app.globalData.darkMode)
     this.setData({
         'switch2' : e.detail.value
     })
+    app.globalData.darkModeByTime = e.detail.value
+    wx.setStorage({
+      key: 'darkModeByTime',
+      data: e.detail.value
+    });
+    if (e.detail.value) {
+      console.log(app.globalData.darkModeStartTime)
+      if (app.globalData.darkModeStartTime) {
+        this.setData({
+          time1: app.globalData.darkModeStartTime,
+          time2: app.globalData.darkModeStopTime
+        })
+        this.saveDarkModeTimeRange(app.globalData.darkModeStartTime, app.globalData.darkModeStopTime, this)
+      } else {
+        this.saveDarkModeTimeRange(this.data.time1, this.data.time2, this)
+      }
+      console.log("456")
+    } else {
+      app.globalData.darkMode = true
+      this.setData({
+        'darkMode': true
+      })
+      wx.setStorage({
+        key: 'darkMode',
+        data: true
+      })
+      console.log("123")
+      app.switchNavigationBar(true)
+    }
   },
-  // bindTimeChange: function (e) {
-  //     this.setData({
-  //         time: e.detail.value
-  //     })
-  // },
+
+  bindTime1Change: function (e) {
+    console.log(e.detail.value.substr(0, 2))
+    wx.setStorage({
+      key: 'darkModeStartTime',
+      data: e.detail.value,
+      fail: (result) => {
+        console.log("保存开始时间失败:" + result)
+      }
+    })
+    this.setData({
+        time1: e.detail.value
+    })
+    this.saveDarkModeTimeRange(this.data.time1, this.data.time2, this)
+  },
+
+  bindTime2Change: function (e) {
+    console.log(e.detail.value.substr(0, 2))
+    this.setData({
+        time2: e.detail.value
+    })
+    wx.setStorage({
+      key: 'darkModeStopTime',
+      data: e.detail.value,
+      fail: (result) => {
+        console.log("保存开始时间失败:" + result)
+      }
+    })
+    this.saveDarkModeTimeRange(this.data.time1, this.data.time2, this)
+    
+  },
 
   switchNavigationBar: function(data) {
     if (data) {
@@ -147,6 +230,34 @@ Page({
           frontColor: '#ffffff',
           backgroundColor: '#6A5ACD'
         })
+    }
+  },
+
+  saveDarkModeTimeRange: function(startTime, stopTime, that) {
+    wx.setStorage({
+      key: 'darkModeStartTime',
+      data: startTime
+    })
+    wx.setStorage({
+      key: 'darkModeStopTime',
+      data: stopTime
+    })
+    app.globalData.darkModeStartTime = startTime
+    app.globalData.darkModeStopTime = stopTime
+
+    let hour = (new Date()).getHours()
+    let min = (new Date()).getMinutes()
+    let startTimeHour = startTime.substr(0, 2)
+    let stopTimeHour = stopTime.substr(0, 2)
+    let startTimeMin = startTime.substr(-2, 2)
+    let stopTimeMin = stopTime.substr(-2, 2)
+    if ((startTimeHour <= hour && startTimeMin <= min) 
+      || (hour < stopTimeHour && min < stopTimeMin)) {
+        console.log("黑")
+        app.switchDarkMode1(true, that)
+    } else {
+      console.log("白")
+      app.switchDarkMode1(false, that)
     }
   }
 

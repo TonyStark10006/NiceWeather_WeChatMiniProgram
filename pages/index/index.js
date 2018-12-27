@@ -2,6 +2,7 @@ const app = getApp();
 const thisPage = getCurrentPages;
 // const apiData = require('../../resources/data.js')
 const config = require('../../config.js')
+const promise = require('../../utils/wechatAPI.js')
 // wx.cloud.init({
 //   traceUser: true
 // })
@@ -109,17 +110,67 @@ Page({
     //   hideDistrict: true, // 是否隐藏区县选择栏，默认显示
     // });
     // 因为onshow时获取到值的时间比设置globalData值的时间点要早，所以要从本地储存获取darkMode的值
-    wx.getStorage({
-      key: 'darkMode',
-      success: (res) => {
-        this.setData({
-          darkMode: res.data
+    let that = this 
+    promise.wechatAPI.taskSequence()
+    .then(() => {
+      wx.getStorage({
+        key: 'darkMode',
+        success: (res) => {
+          that.setData({
+            darkMode: res.data
+          })
+          console.log(res)
+          app.switchNavigationBar(res.data)
+          app.switchTabBar(res.data)
+        }
+       });
+      })
+    .then(() => {
+      wx.getStorage({
+        key: 'darkModeByTime',
+        success: (result) => {
+            app.globalData.darkModeByTime = result.data
+            console.log('app.globalData.darkModeByTime')
+          }
         })
-        console.log(res)
-        app.switchNavigationBar(res.data)
-        app.switchTabBar(res.data)
-      }
-    });
+        
+      })
+    .then(() => {
+      wx.getStorage({
+        key: 'darkModeStartTime',
+        success: (result) => {
+            app.globalData.darkModeStartTime = result.data
+            console.log('darkModeStartTime')
+          }
+        })
+      })
+    .then(() => {
+        wx.getStorage({
+        key: 'darkModeStopTime',
+        success: (result) => {
+          app.globalData.darkModeStopTime = result.data
+          console.log('darkModeStopTime')
+          }
+        })
+      })
+    .then(() => {
+        if (app.globalData.darkModeByTime) {
+          let hour = (new Date()).getHours()
+          let min = (new Date()).getMinutes()
+          let startTimeHour = app.globalData.darkModeStartTime.substr(0, 2)
+          let stopTimeHour = app.globalData.darkModeStopTime.substr(0, 2)
+          let startTimeMin = app.globalData.darkModeStartTime.substr(-2, 2)
+          let stopTimeMin = app.globalData.darkModeStopTime.substr(-2, 2)
+          if ((startTimeHour <= hour && startTimeMin <= min) 
+            || (hour < stopTimeHour && min < stopTimeMin)) {
+              console.log("黑")
+              app.switchDarkMode1(true, that)
+          } else {
+            console.log("白")
+            app.switchDarkMode1(false, that)
+          }
+        }
+    })
   },
 
   /**
@@ -345,6 +396,10 @@ Page({
 
   hideLoading: function() {
     wx.hideLoading();
+  },
+
+  returnThis: function() {
+    return this
   }
 
 })
