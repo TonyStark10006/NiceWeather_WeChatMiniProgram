@@ -29,12 +29,13 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    app.switchNavigationBar(app.globalData.darkMode)
-    console.log(app.globalData.darkMode)
-    this.setData({
-      darkMode: app.globalData.darkMode
-    })
+    app.switchDarkMode(this)
     app.switchTabBar(app.globalData.darkMode)
+    // app.switchNavigationBar(app.globalData.darkMode)
+    // this.setData({
+    //   darkMode: app.globalData.darkMode
+    // })
+    // app.switchTabBar(app.globalData.darkMode)
   },
 
   /**

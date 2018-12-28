@@ -22,7 +22,6 @@ Page({
    */
   onLoad: function (options) {
     console.log(options)//区域选择页面传入参数
-    //console.log(config.generateKey())
     if (!options.city) {
       wx.showLoading({
         title: '定位中...',
@@ -34,7 +33,6 @@ Page({
         })
         this.getCurrentWeather(res)
       }, (error) => {
-        //console.log(error)
         // 兼容处理调用设置页功能，SDK版本小于2.0.7的可以用wx.openSetting这个API，SDK不小于2.0.7要使用button组件
         // this.hideLoading()
         wx.hideLoading();
@@ -119,7 +117,6 @@ Page({
           that.setData({
             darkMode: res.data
           })
-          console.log(res)
           app.switchNavigationBar(res.data)
           app.switchTabBar(res.data)
         }
@@ -154,22 +151,22 @@ Page({
         })
       })
     .then(() => {
-        if (app.globalData.darkModeByTime) {
-          let hour = (new Date()).getHours()
-          let min = (new Date()).getMinutes()
-          let startTimeHour = app.globalData.darkModeStartTime.substr(0, 2)
-          let stopTimeHour = app.globalData.darkModeStopTime.substr(0, 2)
-          let startTimeMin = app.globalData.darkModeStartTime.substr(-2, 2)
-          let stopTimeMin = app.globalData.darkModeStopTime.substr(-2, 2)
-          if ((startTimeHour <= hour && startTimeMin <= min) 
-            || (hour < stopTimeHour && min < stopTimeMin)) {
-              console.log("黑")
-              app.switchDarkMode1(true, that)
-          } else {
-            console.log("白")
-            app.switchDarkMode1(false, that)
-          }
-        }
+      console.log('switchDarkMode')
+      app.switchDarkMode(that)
+        // if (app.globalData.darkModeByTime) {
+        //   let hour = (new Date()).getHours()
+        //   let min = (new Date()).getMinutes()
+        //   let startTimeHour = app.globalData.darkModeStartTime.substr(0, 2)
+        //   let stopTimeHour = app.globalData.darkModeStopTime.substr(0, 2)
+        //   let startTimeMin = app.globalData.darkModeStartTime.substr(-2, 2)
+        //   let stopTimeMin = app.globalData.darkModeStopTime.substr(-2, 2)
+        //   if ((startTimeHour <= hour && startTimeMin <= min) 
+        //     || ((hour == stopTimeHour && min < stopTimeMin) || (hour <= (stopTimeHour - 1)))) {
+        //       app.switchDarkModeGo(true, that)
+        //   } else {
+        //     app.switchDarkModeGo(false, that)
+        //   }
+        // }
     })
   },
 
@@ -396,10 +393,6 @@ Page({
 
   hideLoading: function() {
     wx.hideLoading();
-  },
-
-  returnThis: function() {
-    return this
   }
 
 })

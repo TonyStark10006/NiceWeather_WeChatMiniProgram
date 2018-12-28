@@ -1,7 +1,7 @@
 //app.js
 App({
   globalData: {
-    version: "2.6.0 (181227)",
+    version: "2.6.1 (181228)",
     credit: "感谢心知天气、中国天气网、百度地图提供数据。\n数据仅供参考",
     copyRight: "Copyright © 2018",
     darkMode: false,
@@ -12,8 +12,7 @@ App({
   onShow(options) {
     wx.getStorage({
       key: 'darkMode',
-      success: (result)=>{
-        console.log(result)
+      success: (result) => {
         if (result.data === true) {
           this.globalData.darkMode = result.data
         }
@@ -66,14 +65,11 @@ App({
       let stopTimeHour = stopTime.substr(0, 2)
       let startTimeMin = startTime.substr(-2, 2)
       let stopTimeMin = stopTime.substr(-2, 2)
-      console.log(startTime + stopTime)
       if ((startTimeHour <= hour && startTimeMin <= min) 
-        || (hour < stopTimeHour && min < stopTimeMin)) {
-          console.log("黑")
-          this.switchDarkMode1(true, that)
+        || ((hour == stopTimeHour && min < stopTimeMin) || (hour <= (stopTimeHour - 1)))) {
+          this.switchDarkModeGo(true, that)
       } else {
-        console.log("白")
-        this.switchDarkMode1(false, that)
+        this.switchDarkModeGo(false, that)
       }
     } else {
       that.setData({
@@ -84,7 +80,7 @@ App({
     }
   },
 
-  switchDarkMode1: function(status, that) {
+  switchDarkModeGo: function(status, that) {
     wx.setStorage({
       key: 'darkMode',
       data: status
@@ -94,6 +90,23 @@ App({
     that.setData({
       darkMode: status
     })
-  }
+  },
+
+  // switchDarkModeByTimeFromMemory: function(that) {
+  //   let startTime = this.globalData.darkModeStartTime
+  //   let stopTime = this.globalData.darkModeStopTime
+  //   let hour = (new Date()).getHours()
+  //   let min = (new Date()).getMinutes()
+  //   let startTimeHour = startTime.substr(0, 2)
+  //   let stopTimeHour = stopTime.substr(0, 2)
+  //   let startTimeMin = startTime.substr(-2, 2)
+  //   let stopTimeMin = stopTime.substr(-2, 2)
+  //   if ((startTimeHour <= hour && startTimeMin <= min) 
+  //     || ((hour == stopTimeHour && min < stopTimeMin) || (hour <= (stopTimeHour - 1)))) {
+  //       this.switchDarkModeGo(true, that)
+  //   } else {
+  //     this.switchDarkModeGo(false, that)
+  //   }
+  // }
 
 })

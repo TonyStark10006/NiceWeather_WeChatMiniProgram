@@ -50,7 +50,6 @@ Page({
     //   }
     // })
     app.switchDarkMode(this)
-    console.log(app.globalData.darkModeByTime)
     if (app.globalData.darkModeByTime) {
       if (app.globalData.darkModeStartTime) {
         that.setData({
@@ -150,7 +149,6 @@ Page({
 
   switch3Change: function(e) {
     // app.globalData.darkMode = e.detail.value
-    // console.log("黑暗模式的全局变量值为" + app.globalData.darkMode)
     this.setData({
         'switch2' : e.detail.value
     })
@@ -160,7 +158,6 @@ Page({
       data: e.detail.value
     });
     if (e.detail.value) {
-      console.log(app.globalData.darkModeStartTime)
       if (app.globalData.darkModeStartTime) {
         this.setData({
           time1: app.globalData.darkModeStartTime,
@@ -170,7 +167,6 @@ Page({
       } else {
         this.saveDarkModeTimeRange(this.data.time1, this.data.time2, this)
       }
-      console.log("456")
     } else {
       app.globalData.darkMode = true
       this.setData({
@@ -180,13 +176,11 @@ Page({
         key: 'darkMode',
         data: true
       })
-      console.log("123")
       app.switchNavigationBar(true)
     }
   },
 
   bindTime1Change: function (e) {
-    console.log(e.detail.value.substr(0, 2))
     wx.setStorage({
       key: 'darkModeStartTime',
       data: e.detail.value,
@@ -201,7 +195,6 @@ Page({
   },
 
   bindTime2Change: function (e) {
-    console.log(e.detail.value.substr(0, 2))
     this.setData({
         time2: e.detail.value
     })
@@ -252,12 +245,10 @@ Page({
     let startTimeMin = startTime.substr(-2, 2)
     let stopTimeMin = stopTime.substr(-2, 2)
     if ((startTimeHour <= hour && startTimeMin <= min) 
-      || (hour < stopTimeHour && min < stopTimeMin)) {
-        console.log("黑")
-        app.switchDarkMode1(true, that)
+      || ((hour == stopTimeHour && min < stopTimeMin) || (hour <= (stopTimeHour - 1)))) {
+        app.switchDarkModeGo(true, that)
     } else {
-      console.log("白")
-      app.switchDarkMode1(false, that)
+      app.switchDarkModeGo(false, that)
     }
   }
 
