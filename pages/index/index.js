@@ -111,48 +111,60 @@ Page({
     let that = this 
     promise.wechatAPI.taskSequence()
     .then(() => {
-      wx.getStorage({
-        key: 'darkMode',
-        success: (res) => {
-          that.setData({
-            darkMode: res.data
-          })
-          app.switchNavigationBar(res.data)
-          app.switchTabBar(res.data)
-        }
-       });
-      })
-    .then(() => {
-      wx.getStorage({
-        key: 'darkModeByTime',
-        success: (result) => {
-            app.globalData.darkModeByTime = result.data
-            console.log('app.globalData.darkModeByTime')
-          }
-        })
-        
-      })
-    .then(() => {
-      wx.getStorage({
-        key: 'darkModeStartTime',
-        success: (result) => {
-            app.globalData.darkModeStartTime = result.data
-            console.log('darkModeStartTime')
-          }
-        })
-      })
-    .then(() => {
+      return new Promise(function (resolve, reject) {
         wx.getStorage({
-        key: 'darkModeStopTime',
-        success: (result) => {
-          app.globalData.darkModeStopTime = result.data
-          console.log('darkModeStopTime')
+          key: 'darkMode',
+          success: (res) => {
+            that.setData({
+              darkMode: res.data
+            })
+            app.switchNavigationBar(res.data)
+            app.switchTabBar(res.data)
+            resolve()
           }
         })
       })
+    })
     .then(() => {
-      console.log('switchDarkMode')
+      return new Promise(function (resolve, reject) {
+        wx.getStorage({
+          key: 'darkModeByTime',
+          success: (result) => {
+            app.globalData.darkModeByTime = result.data
+            // console.log('app.globalData.darkModeByTime')
+            resolve()
+          }
+        })
+      })
+    })
+    .then(() => {
+      return new Promise(function (resolve, reject) {
+        wx.getStorage({
+          key: 'darkModeStartTime',
+          success: (result) => {
+            app.globalData.darkModeStartTime = result.data
+            // console.log('darkModeStartTime')
+            resolve()
+          }
+        })
+      })
+    })
+    .then(() => {
+      return new Promise(function (resolve, reject) {
+        wx.getStorage({
+          key: 'darkModeStopTime',
+          success: (result) => {
+            app.globalData.darkModeStopTime = result.data
+            // console.log('darkModeStopTime')
+            resolve()
+          }
+        })
+      })
+    })
+    .then(() => {
+      // console.log('switchDarkMode')
       app.switchDarkMode(that)
+      app.switchTabBar(app.globalData.darkMode)
         // if (app.globalData.darkModeByTime) {
         //   let hour = (new Date()).getHours()
         //   let min = (new Date()).getMinutes()
@@ -167,6 +179,9 @@ Page({
         //     app.switchDarkModeGo(false, that)
         //   }
         // }
+    }).catch(function(error) {
+      console.log('发生错误！', error)
+      logger.warn('发生错误！', error)
     })
   },
 
@@ -379,6 +394,9 @@ Page({
           })
         }
         this.hideLoading()
+      },
+      fail: (error) => {
+        logger.warn(error)
       }
     })
 
