@@ -1,7 +1,7 @@
 //app.js
 App({
   globalData: {
-    version: "2.6.2 (190102)",
+    version: "2.6.3 (190103)",
     credit: "感谢心知天气、中国天气网、百度地图提供数据。\n数据仅供参考",
     copyRight: "Copyright © 2018",
     darkMode: false,
@@ -65,7 +65,7 @@ App({
       let stopTimeHour = stopTime.substr(0, 2)
       let startTimeMin = startTime.substr(-2, 2)
       let stopTimeMin = stopTime.substr(-2, 2)
-      if ((startTimeHour <= hour && startTimeMin <= min) 
+      if ((startTimeHour < hour) || (startTimeHour == hour && startTimeMin <= min)
         || ((hour == stopTimeHour && min < stopTimeMin) || (hour <= (stopTimeHour - 1)))) {
           this.switchDarkModeGo(true, that)
       } else {

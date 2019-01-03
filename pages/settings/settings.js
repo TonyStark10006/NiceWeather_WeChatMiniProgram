@@ -244,8 +244,8 @@ Page({
     let stopTimeHour = stopTime.substr(0, 2)
     let startTimeMin = startTime.substr(-2, 2)
     let stopTimeMin = stopTime.substr(-2, 2)
-    if ((startTimeHour <= hour && startTimeMin <= min) 
-      || ((hour == stopTimeHour && min < stopTimeMin) || (hour <= (stopTimeHour - 1)))) {
+    if ((startTimeHour < hour) || (startTimeHour == hour && startTimeMin <= min)
+        || ((hour == stopTimeHour && min < stopTimeMin) || (hour <= (stopTimeHour - 1)))) {
         app.switchDarkModeGo(true, that)
     } else {
       app.switchDarkModeGo(false, that)
