@@ -3,6 +3,7 @@ const thisPage = getCurrentPages;
 // const apiData = require('../../resources/data.js')
 const config = require('../../config.js')
 const promise = require('../../utils/wechatAPI.js')
+var retryCount = 0
 // wx.cloud.init({
 //   traceUser: true
 // })
@@ -377,26 +378,31 @@ Page({
   },
 
   get7DaysWeather: function(city) {
+    let that = this
     wx.request({
       url: config.data.getWeatherMsgURL + city,
       success: (res) => {
         console.log(res.data)
         if (res.data.status == 200) {
-          this.setData({
-            updateTime: res.data.updateTime,
-            forecast: res.data.data,
-            showSettingPage: false
-          })
+          if (res.statusCode == 200) {
+            this.setData({
+              updateTime: res.data.updateTime,
+              forecast: res.data.data,
+              showSettingPage: false
+            })
+          } else {
+            wx.showModal({
+              content: "没有" + city + "的7天天气预测啊",
+              showCancel: false
+            })
+          }
         } else {
-          wx.showModal({
-            content: "没有" + city + "的7天天气预测啊",
-            showCancel: false
-          })
+          that.handleNetworkException(that)
         }
         this.hideLoading()
       },
       fail: (error) => {
-        logger.warn(error)
+        that.handleNetworkException(that)
       }
     })
 
@@ -411,6 +417,29 @@ Page({
 
   hideLoading: function() {
     wx.hideLoading();
+  },
+
+  handleNetworkException: function(that) {
+    console.log(retryCount)
+    wx.hideLoading()
+    if (retryCount < 3) {
+      wx.showModal({
+        content: '网络连接超时，重试下？',
+        success(res) {
+          if (res.confirm) {
+            that.onPullDownRefresh()
+            ++retryCount
+          } else if (res.cancel) {
+            console.log('用户点击取消')
+          }
+        }
+      })
+    } else {
+      wx.showModal({
+        content: '网络或者服务似乎有点问题，等下再试试吧',
+        showCancel: false
+      })
+    }
   }
 
 })
